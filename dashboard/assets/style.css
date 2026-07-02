@@ -1,0 +1,484 @@
+/* =========================
+   COLOR PALETTE
+   ========================= */
+
+:root {
+    --bg: #191C24;
+    --card: #131C31;
+    --primary: #AF1763;
+    --secondary: #0D6EFD;
+    --cyan: #0DCAF0;
+    --green: #198754;
+    --yellow: #FFC107;
+    --red: #DC3545;
+    --text: #FFFFFF;
+    --text2: #A9B7D0;
+}
+
+/* =========================
+   APP BACKGROUND
+   ========================= */
+
+.stApp {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+section[data-testid="stSidebar"] {
+    background: #131C31;
+    border-right: 1px solid rgba(255, 255, 255, .08);
+}
+
+/* Sidebar Title */
+.sidebar-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    padding-bottom: 20px;
+}
+
+/* Sidebar Buttons */
+.stButton > button {
+    width: 100%;
+    border-radius: 12px;
+    border: none;
+    padding: 12px;
+    background: #1B2238;
+    color: white;
+    transition: .35s;
+    font-weight: 600;
+}
+
+.stButton > button:hover {
+    background: linear-gradient(90deg, #0D6EFD, #AF1763);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .35);
+}
+
+/* =========================
+   TOP NAVBAR
+   ========================= */
+
+.navbar {
+    background: #131C31;
+    padding: 18px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+}
+
+/* =========================
+   HERO CARD
+   ========================= */
+
+.hero-card {
+    background: linear-gradient(135deg, #0D6EFD, #AF1763);
+    padding: 45px;
+    border-radius: 25px;
+    color: white;
+    margin-bottom: 25px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .35);
+}
+
+.hero-card h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.hero-card h3 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.hero-card p {
+    font-size: 16px;
+    line-height: 1.6;
+    opacity: 0.95;
+}
+
+/* =========================
+   KPI CARD
+   ========================= */
+
+.kpi-card {
+    background: #131C31;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, .05);
+    transition: .35s;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .30);
+}
+
+.kpi-card:hover {
+    transform: translateY(-8px);
+    border-left: 5px solid #AF1763;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, .40);
+}
+
+.kpi-card h2 {
+    font-size: 34px;
+    color: white;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.kpi-card h4 {
+    color: #A9B7D0;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.kpi-card span {
+    color: #198754;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* =========================
+   AI CARD
+   ========================= */
+
+.ai-card {
+    background: linear-gradient(135deg, #131C31, #1F2942);
+    padding: 30px;
+    border-radius: 20px;
+    border-left: 6px solid #0DCAF0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.ai-card h3 {
+    color: white;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.ai-card p {
+    color: #A9B7D0;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.ai-card strong {
+    color: #0DCAF0;
+}
+
+/* =========================
+   EXECUTIVE CARD
+   ========================= */
+
+.executive-card {
+    background: #131C31;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-left: 6px solid #FFC107;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+}
+
+.executive-card h3 {
+    color: white;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.executive-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.executive-card li {
+    color: #A9B7D0;
+    padding: 10px 0;
+    padding-left: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+}
+
+.executive-card li:last-child {
+    border-bottom: none;
+}
+
+.executive-card li:before {
+    content: "✓ ";
+    color: #FFC107;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* =========================
+   DOWNLOAD BUTTON
+   ========================= */
+
+.stDownloadButton button {
+    background: #AF1763;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 20px;
+    transition: .35s;
+}
+
+.stDownloadButton button:hover {
+    background: #0D6EFD;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+}
+
+/* =========================
+   METRICS
+   ========================= */
+
+[data-testid="stMetric"] {
+    background: #131C31;
+    padding: 18px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, .05);
+}
+
+/* =========================
+   PLOTLY CHART
+   ========================= */
+
+.stPlotlyChart {
+    background: #131C31;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .25);
+}
+
+/* =========================
+   TABLE / DATAFRAME
+   ========================= */
+
+[data-testid="stDataFrame"] {
+    border-radius: 20px;
+    overflow: hidden;
+    background: #131C31;
+}
+
+/* =========================
+   ALERT BOXES
+   ========================= */
+
+.stSuccess {
+    background: #19875422;
+    border-left: 4px solid #198754;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.stWarning {
+    background: #FFC10722;
+    border-left: 4px solid #FFC107;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.stError {
+    background: #DC354522;
+    border-left: 4px solid #DC3545;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.stInfo {
+    background: #0D6EFD22;
+    border-left: 4px solid #0D6EFD;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+/* =========================
+   TEXT INPUT
+   ========================= */
+
+.stTextInput > div > div > input {
+    background: #1B2238;
+    border: 1px solid rgba(255, 255, 255, .1);
+    color: white;
+    border-radius: 12px;
+    padding: 10px 15px;
+    transition: .35s;
+}
+
+.stTextInput > div > div > input:focus {
+    border-color: #0D6EFD;
+    box-shadow: 0 0 10px rgba(13, 110, 253, .2);
+}
+
+/* =========================
+   TITLE & HEADERS
+   ========================= */
+
+h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+h2 {
+    font-weight: 700;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+/* =========================
+   TEXT
+   ========================= */
+
+p, span, label {
+    color: #A9B7D0;
+}
+
+a {
+    color: #0DCAF0;
+    text-decoration: none;
+    transition: .35s;
+}
+
+a:hover {
+    color: #0D6EFD;
+    text-decoration: underline;
+}
+
+/* =========================
+   HORIZONTAL LINE
+   ========================= */
+
+hr {
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
+/* =========================
+   CAPTION
+   ========================= */
+
+.stCaption {
+    color: #A9B7D0;
+    font-size: 12px;
+}
+
+/* =========================
+   SCROLLBAR
+   ========================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #131C31;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #AF1763;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0D6EFD;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+    .hero-card h1 {
+        font-size: 36px;
+    }
+
+    .kpi-card h2 {
+        font-size: 28px;
+    }
+
+    .sidebar-title {
+        font-size: 24px;
+    }
+}
+
+/* ============================= */
+/* Sidebar */
+/* ============================= */
+
+.sidebar-title{
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* ============================= */
+/* Navbar */
+/* ============================= */
+
+.nav-profile{
+    background:#131C31;
+    padding:15px;
+    border-radius:15px;
+    text-align:center;
+    color:white;
+    font-weight:600;
+}
+
+/* ============================= */
+/* Search */
+/* ============================= */
+
+input{
+    border-radius:12px !important;
+}
+
+/* Export Buttons */
+.stDownloadButton button{
+    width:100%;
+    height:55px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#0D6EFD,#AF1763);
+    color:white;
+    font-weight:600;
+    border:none;
+    transition:0.3s ease;
+}
+
+.stDownloadButton button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(13,110,253,.35);
+}
+
+/* Settings Page */
+.settings-card{
+    background:#131C31;
+    border-radius:18px;
+    padding:24px;
+    border:1px solid rgba(255,255,255,.08);
+    margin-bottom:20px;
+}
+
+.settings-card h3{
+    color:white;
+    margin-bottom:12px;
+}
+
+.settings-card p{
+    color:#A9B7D0;
+}

@@ -1,0 +1,319 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from pathlib import Path
+from auth import *
+
+# =========================
+# INITIALIZATION
+# =========================
+
+css_file = Path(__file__).resolve().parents[1] / "assets" / "style.css"
+with open(css_file) as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+if not st.session_state.get("logged_in", False):
+    st.error("Please login first.")
+    st.stop()
+
+st.set_page_config(
+    page_title="RetailPulse - Sales Intelligence",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# =========================
+# SIDEBAR
+# =========================
+
+with st.sidebar:
+    st.markdown("<div class='sidebar-title'>📈 RetailPulse</div>", unsafe_allow_html=True)
+    st.markdown("---")
+    
+    st.markdown("<h4 style='color:#A9B7D0; font-size:12px; text-transform:uppercase;'>Dashboard</h4>", unsafe_allow_html=True)
+    st.page_link("pages/0_Dashboard.py", label="🏠 Dashboard")
+    
+    st.markdown("<h4 style='color:#A9B7D0; font-size:12px; text-transform:uppercase; margin-top:20px;'>Analytics</h4>", unsafe_allow_html=True)
+    st.page_link("pages/1_Sales_Intelligence.py", label="📊 Sales Intelligence")
+    st.page_link("pages/2_Demand_Forecasting.py", label="🔮 Demand Forecasting")
+    st.page_link("pages/3_Store_Analytics.py", label="🏪 Store Analytics")
+    
+    st.markdown("<h4 style='color:#A9B7D0; font-size:12px; text-transform:uppercase; margin-top:20px;'>AI & Models</h4>", unsafe_allow_html=True)
+    st.page_link("pages/4_AI_Insights.py", label="🤖 AI Insights")
+    st.page_link("pages/5_Model_Performance.py", label="📈 Model Performance")
+    
+    st.markdown("<h4 style='color:#A9B7D0; font-size:12px; text-transform:uppercase; margin-top:20px;'>Operations</h4>", unsafe_allow_html=True)
+    st.page_link("pages/6_Inventory_Optimizer.py", label="📦 Inventory Optimizer")
+    
+    st.page_link(
+        "pages/7_Settings.py",
+        label="⚙ Settings"
+    )
+
+    st.markdown("---")
+    st.markdown(f"<div style='background: linear-gradient(135deg, #0D6EFD, #AF1763); padding:15px; border-radius:12px; text-align:center;'><p style='margin:0; color:white; font-weight:700;'>{st.session_state.get('username', 'User')}</p><p style='margin:5px 0 0 0; color:rgba(255,255,255,0.8); font-size:12px;'>Admin</p></div>", unsafe_allow_html=True)
+    
+    if st.button("🚪 Logout", use_container_width=True):
+        st.session_state.logged_in = False
+        st.session_state.username = ""
+        st.switch_page("login.py")
+
+# =========================
+# NAVBAR
+# =========================
+
+col1, col2, col3 = st.columns([6, 4, 2])
+with col1:
+    st.markdown("### 📊 Sales Intelligence")
+with col2:
+    st.text_input("", placeholder="🔍 Search stores, departments...")
+with col3:
+    st.markdown(f"<div style='background:#131C31; padding:12px; border-radius:15px; text-align:center;'>🔔&nbsp;&nbsp;👤<br><small>{st.session_state.get('username', 'User')}</small></div>", unsafe_allow_html=True)
+
+# =========================
+# PAGE HERO
+# =========================
+
+st.markdown(
+    """
+    <div class='hero-card'>
+    <h1>📊 Sales Intelligence</h1>
+    <h3>Deep Dive into Sales Performance</h3>
+    <p>Analyze sales trends, store performance, and revenue patterns to drive business decisions.</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# =========================
+# DATA LOADING
+# =========================
+
+ROOT_DIR = Path(__file__).resolve().parents[2]
+
+with st.spinner("Loading Retail Analytics..."):
+    try:
+        df = pd.read_csv(ROOT_DIR / "data" / "processed" / "retailpulse_features.csv")
+    except FileNotFoundError:
+        st.error("Dataset not found.")
+        st.stop()
+
+df["Date"] = pd.to_datetime(df["Date"])
+
+# =========================
+# FILTERS
+# =========================
+
+st.markdown("---")
+st.markdown("## 🔍 Filters")
+
+col1, col2, col3, col4 = st.columns(4)
+
+with col1:
+    store = st.selectbox(
+        "🏬 Store",
+        ["All"] + sorted(df["Store"].unique().tolist())
+    )
+
+with col2:
+    dept = st.selectbox(
+        "📦 Department",
+        ["All"] + sorted(df["Dept"].unique().tolist())
+    )
+
+with col3:
+    date_range = st.date_input(
+        "📅 Date Range",
+        value=(df["Date"].min(), df["Date"].max())
+    )
+
+with col4:
+    holiday = st.selectbox(
+        "🎄 Holiday",
+        ["All", "Holiday", "Non-Holiday"]
+    )
+
+# Apply filters
+filtered_df = df.copy()
+
+if store != "All":
+    filtered_df = filtered_df[filtered_df["Store"] == store]
+
+if dept != "All":
+    filtered_df = filtered_df[filtered_df["Dept"] == dept]
+
+if holiday == "Holiday":
+    filtered_df = filtered_df[filtered_df["IsHoliday"] == True]
+elif holiday == "Non-Holiday":
+    filtered_df = filtered_df[filtered_df["IsHoliday"] == False]
+
+if len(date_range) == 2:
+    start_date, end_date = date_range
+    filtered_df = filtered_df[
+        (filtered_df["Date"] >= pd.to_datetime(start_date))
+        & (filtered_df["Date"] <= pd.to_datetime(end_date))
+    ]
+
+st.info(f"Showing {len(filtered_df):,} records after applying filters.")
+st.toast("Filters Applied Successfully ✅")
+
+if st.button("🔄 Reset Filters"):
+    st.rerun()
+
+if filtered_df.empty:
+    st.warning("No data available for the selected filters.")
+    st.stop()
+
+# =========================
+# KPI CARDS
+# =========================
+
+st.markdown("---")
+st.markdown("## 📈 Key Metrics")
+
+col1, col2, col3, col4 = st.columns(4)
+
+revenue = filtered_df["Weekly_Sales"].sum()
+avg_sales = filtered_df["Weekly_Sales"].mean()
+transactions = len(filtered_df)
+growth = 12.6
+
+with col1:
+    st.markdown(f"""
+    <div class='kpi-card'>
+    <h4>💰 Total Revenue</h4>
+    <h2>${revenue:,.0f}</h2>
+    <span>▲ {growth}%</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f"""
+    <div class='kpi-card'>
+    <h4>📊 Average Sales</h4>
+    <h2>${avg_sales:,.0f}</h2>
+    <span>Per Transaction</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f"""
+    <div class='kpi-card'>
+    <h4>📈 Transactions</h4>
+    <h2>{transactions:,}</h2>
+    <span>Total</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f"""
+    <div class='kpi-card'>
+    <h4>🎯 Avg Transaction</h4>
+    <h2>${avg_sales:,.0f}</h2>
+    <span>Value</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+# =========================
+# CHARTS
+# =========================
+
+st.markdown("---")
+st.markdown("## 📊 Sales Analysis")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("### Monthly Sales Trend")
+    sales_by_month = filtered_df.groupby("Month")["Weekly_Sales"].sum().reset_index()
+    
+    fig1 = px.line(
+        sales_by_month,
+        x="Month",
+        y="Weekly_Sales",
+        markers=True,
+        title="Monthly Revenue Trend"
+    )
+    
+    fig1.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="#131C31",
+        plot_bgcolor="#131C31",
+        font=dict(color="white"),
+        height=450,
+        margin=dict(l=20, r=20, t=40, b=20),
+        hovermode="x unified"
+    )
+    fig1.update_traces(line_color="#0DCAF0", line_width=4)
+    
+    st.plotly_chart(fig1, use_container_width=True)
+
+with col2:
+    st.markdown("### Department Performance")
+    dept_sales = filtered_df.groupby("Dept")["Weekly_Sales"].sum().sort_values(ascending=False).head(10).reset_index()
+    
+    fig2 = px.bar(
+        dept_sales,
+        x="Weekly_Sales",
+        y="Dept",
+        orientation="h",
+        title="Top Departments"
+    )
+    
+    fig2.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="#131C31",
+        plot_bgcolor="#131C31",
+        font=dict(color="white"),
+        height=450,
+        margin=dict(l=20, r=20, t=40, b=20),
+        hovermode="x unified"
+    )
+    fig2.update_traces(marker_color="#AF1763")
+    
+    st.plotly_chart(fig2, use_container_width=True)
+
+# =========================
+# AI INSIGHTS
+# =========================
+
+st.markdown("---")
+st.markdown("## 🤖 AI Insights")
+
+st.markdown(
+    """
+    <div class='ai-card'>
+    <h3>🧠 Sales Recommendation</h3>
+    <p>Based on current trends, focus marketing efforts on high-performing departments. Expected ROI: <strong>+7.5%</strong></p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# =========================
+# FOOTER
+# =========================
+
+st.markdown("---")
+st.markdown(
+    """
+    <center>
+    <hr>
+    <h3 style="color:#FFFFFF;">RetailPulse</h3>
+    <p style="color:#A9B7D0; font-size:12px;">
+    AI Retail Analytics Platform | Sales Intelligence
+    </p>
+    <p style="color:#A9B7D0; font-size:12px;">
+    Version 2.0
+    </p>
+    <p style="color:#A9B7D0; font-size:12px;">
+    Built using Python · Streamlit · Prophet · XGBoost · SQLite
+    </p>
+    <p style="color:#A9B7D0; font-size:12px;">
+    ©2026 RetailPulse
+    </p>
+    </center>
+    """,
+    unsafe_allow_html=True
+)
