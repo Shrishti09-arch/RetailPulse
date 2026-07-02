@@ -55,7 +55,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(f"<div style='background: linear-gradient(135deg, #0D6EFD, #AF1763); padding:15px; border-radius:12px; text-align:center;'><p style='margin:0; color:white; font-weight:700;'>{st.session_state.get('username', 'User')}</p><p style='margin:5px 0 0 0; color:rgba(255,255,255,0.8); font-size:12px;'>Admin</p></div>", unsafe_allow_html=True)
     
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width="stretch"):
         st.session_state.logged_in = False
         st.session_state.username = ""
         st.switch_page("login.py")
@@ -68,7 +68,7 @@ col1, col2, col3 = st.columns([6, 4, 2])
 with col1:
     st.markdown("### 📈 Model Performance")
 with col2:
-    st.text_input("", placeholder="🔍 Search models...")
+    st.text_input("Search", placeholder="🔍 Search models...", label_visibility="collapsed")
 with col3:
     st.markdown(f"<div style='background:#131C31; padding:12px; border-radius:15px; text-align:center;'>🔔&nbsp;&nbsp;👤<br><small>{st.session_state.get('username', 'User')}</small></div>", unsafe_allow_html=True)
 
@@ -182,7 +182,7 @@ fig_actual_pred.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_actual_pred, use_container_width=True)
+st.plotly_chart(fig_actual_pred, width="stretch")
 
 # =========================
 # RESIDUAL PLOT
@@ -209,7 +209,7 @@ fig_residual.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_residual, use_container_width=True)
+st.plotly_chart(fig_residual, width="stretch")
 
 # =========================
 # ERROR DISTRIBUTION
@@ -234,7 +234,7 @@ fig_error_dist.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_error_dist, use_container_width=True)
+st.plotly_chart(fig_error_dist, width="stretch")
 
 # =========================
 # MODEL COMPARISON TABLE
@@ -252,7 +252,7 @@ comparison = pd.DataFrame({
 })
 
 with st.expander("View Detailed Data"):
-    st.dataframe(comparison, use_container_width=True, height=250)
+    st.dataframe(comparison, width="stretch", height=250)
 
 # =========================
 # AI MODEL INSIGHTS

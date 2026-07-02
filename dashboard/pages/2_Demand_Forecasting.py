@@ -53,7 +53,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(f"<div style='background: linear-gradient(135deg, #0D6EFD, #AF1763); padding:15px; border-radius:12px; text-align:center;'><p style='margin:0; color:white; font-weight:700;'>{st.session_state.get('username', 'User')}</p><p style='margin:5px 0 0 0; color:rgba(255,255,255,0.8); font-size:12px;'>Admin</p></div>", unsafe_allow_html=True)
     
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width="stretch"):
         st.session_state.logged_in = False
         st.session_state.username = ""
         st.switch_page("login.py")
@@ -66,7 +66,7 @@ col1, col2, col3 = st.columns([6, 4, 2])
 with col1:
     st.markdown("### 🔮 Demand Forecasting")
 with col2:
-    st.text_input("", placeholder="🔍 Search forecasts...")
+    st.text_input("Search", placeholder="🔍 Search forecasts...", label_visibility="collapsed")
 with col3:
     st.markdown(f"<div style='background:#131C31; padding:12px; border-radius:15px; text-align:center;'>🔔&nbsp;&nbsp;👤<br><small>{st.session_state.get('username', 'User')}</small></div>", unsafe_allow_html=True)
 
@@ -257,7 +257,7 @@ fig.update_layout(
     margin=dict(l=20, r=20, t=40, b=20)
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 # =========================
 # FORECAST SUMMARY
@@ -313,7 +313,7 @@ stats = pd.DataFrame({
 })
 
 with st.expander("View Detailed Data"):
-    st.dataframe(stats, use_container_width=True, height=450)
+    st.dataframe(stats, width="stretch", height=450)
 
 # =========================
 # DOWNLOAD FORECAST CSV

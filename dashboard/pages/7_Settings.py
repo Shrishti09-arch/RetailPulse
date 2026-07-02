@@ -82,7 +82,7 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width="stretch"):
         st.session_state.logged_in = False
         st.session_state.username = ""
         st.switch_page("login.py")
@@ -95,7 +95,7 @@ with nav1:
 
 with nav2:
     st.text_input(
-        "",
+        "Search",
         placeholder="🔍 Search stores...",
         label_visibility="collapsed"
     )
@@ -297,7 +297,7 @@ save_col, reset_col = st.columns(2)
 with save_col:
     if st.button(
         "💾 Save Settings",
-        use_container_width=True
+        width="stretch"
     ):
         st.toast("Settings Saved Successfully ✅")
         st.success(
@@ -307,7 +307,7 @@ with save_col:
 with reset_col:
     if st.button(
         "🔄 Reset Settings",
-        use_container_width=True
+        width="stretch"
     ):
         st.toast("Settings Reset ✅")
         st.info(

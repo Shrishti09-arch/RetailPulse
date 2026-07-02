@@ -89,7 +89,7 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width="stretch"):
         st.session_state.logged_in = False
         st.session_state.username = ""
         st.switch_page("login.py")
@@ -105,7 +105,7 @@ with nav1:
 
 with nav2:
     st.text_input(
-        "",
+        "Search",
         placeholder="🔍 Search stores...",
         label_visibility="collapsed"
     )
@@ -409,7 +409,7 @@ fig_gauge.update_layout(
     font=dict(color="white")
 )
 
-st.plotly_chart(fig_gauge, use_container_width=True)
+st.plotly_chart(fig_gauge, width="stretch")
 st.info(f"Overall Business Health Score: {health_score}/100")
 
 # =========================
@@ -441,7 +441,7 @@ with col1:
     )
     fig1.update_traces(line_color="#0DCAF0", line_width=4)
 
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, width="stretch")
     st.markdown("<br>", unsafe_allow_html=True)
 
 with col2:
@@ -466,7 +466,7 @@ with col2:
     )
     fig2.update_traces(marker_color="#AF1763")
 
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width="stretch")
     st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("---")
@@ -483,7 +483,7 @@ fig3.update_layout(
 )
 fig3.update_traces(marker_color="#198754")
 
-st.plotly_chart(fig3, use_container_width=True)
+st.plotly_chart(fig3, width="stretch")
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("---")
@@ -506,7 +506,7 @@ fig4.update_layout(
 )
 fig4.update_traces(marker_colorscale=["#AF1763", "#0DCAF0", "#198754", "#FFC107"])
 
-st.plotly_chart(fig4, use_container_width=True)
+st.plotly_chart(fig4, width="stretch")
 st.markdown("<br>", unsafe_allow_html=True)
 
 # =========================
