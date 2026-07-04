@@ -54,10 +54,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(f"<div style='background: linear-gradient(135deg, #0D6EFD, #AF1763); padding:15px; border-radius:12px; text-align:center;'><p style='margin:0; color:white; font-weight:700;'>{st.session_state.get('username', 'User')}</p><p style='margin:5px 0 0 0; color:rgba(255,255,255,0.8); font-size:12px;'>Admin</p></div>", unsafe_allow_html=True)
     
-    if st.button("🚪 Logout", width="stretch"):
+    if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("login.py")
+        st.switch_page("dashboard/login.py")
 
 # =========================
 # NAVBAR
@@ -247,7 +247,7 @@ with col1:
     )
     fig1.update_traces(line_color="#0DCAF0", line_width=4)
     
-    st.plotly_chart(fig1, width="stretch")
+    st.plotly_chart(fig1, use_container_width=True)
 
 with col2:
     st.markdown("### Department Performance")
@@ -272,7 +272,7 @@ with col2:
     )
     fig2.update_traces(marker_color="#AF1763")
     
-    st.plotly_chart(fig2, width="stretch")
+    st.plotly_chart(fig2, use_container_width=True)
 
 # =========================
 # AI INSIGHTS

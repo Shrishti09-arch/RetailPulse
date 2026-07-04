@@ -92,7 +92,7 @@ with st.sidebar:
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("login.py")
+        st.switch_page("dashboard/login.py")
 
 # =========================
 # TOP NAVBAR (Reusable Component)
@@ -656,17 +656,19 @@ with col4:
     )
 
 with col5:
-    forecast = pd.read_csv(
-        ROOT_DIR / "data" / "processed" / "prophet_forecast.csv"
-    )
-    forecast_csv = forecast.to_csv(index=False).encode("utf-8")
+    forecast_path = ROOT_DIR / "data" / "processed" / "prophet_forecast.csv"
 
-    st.download_button(
-        label="🔮 Download Forecast",
-        data=forecast_csv,
-        file_name="Forecast.csv",
-        mime="text/csv"
-    )
+    if forecast_path.exists():
+        forecast = pd.read_csv(forecast_path)
+
+        st.download_button(
+            label="🔮 Download Forecast",
+            data=forecast.to_csv(index=False).encode("utf-8"),
+            file_name="Forecast.csv",
+            mime="text/csv"
+        )
+    else:
+        st.warning("Forecast file not found.")
 
 # =========================
 # FOOTER

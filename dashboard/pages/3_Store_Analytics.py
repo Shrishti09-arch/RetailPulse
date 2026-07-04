@@ -53,10 +53,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(f"<div style='background: linear-gradient(135deg, #0D6EFD, #AF1763); padding:15px; border-radius:12px; text-align:center;'><p style='margin:0; color:white; font-weight:700;'>{st.session_state.get('username', 'User')}</p><p style='margin:5px 0 0 0; color:rgba(255,255,255,0.8); font-size:12px;'>Admin</p></div>", unsafe_allow_html=True)
     
-    if st.button("🚪 Logout", width="stretch"):
+    if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("login.py")
+        st.switch_page("dashboard/login.py")
 
 # =========================
 # NAVBAR
@@ -235,7 +235,7 @@ store_rank["Rank"] = (
 )
 
 with st.expander("View Detailed Data"):
-    st.dataframe(store_rank, width="stretch", height=450)
+    st.dataframe(store_rank, use_container_width=True, height=450)
 
 # =========================
 # TOP 10 STORES
@@ -264,7 +264,7 @@ fig_top10.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_top10, width="stretch")
+st.plotly_chart(fig_top10, use_container_width=True)
 
 # =========================
 # BOTTOM 10 STORES
@@ -293,7 +293,7 @@ fig_bottom10.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_bottom10, width="stretch")
+st.plotly_chart(fig_bottom10, use_container_width=True)
 
 # =========================
 # REVENUE HEATMAP
@@ -327,7 +327,7 @@ fig_heat.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_heat, width="stretch")
+st.plotly_chart(fig_heat, use_container_width=True)
 
 # =========================
 # MONTHLY REVENUE TREND
@@ -361,7 +361,7 @@ fig_monthly.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_monthly, width="stretch")
+st.plotly_chart(fig_monthly, use_container_width=True)
 
 # =========================
 # HOLIDAY VS NORMAL SALES
@@ -394,7 +394,7 @@ fig_holiday.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_holiday, width="stretch")
+st.plotly_chart(fig_holiday, use_container_width=True)
 
 # =========================
 # DEPARTMENT COMPARISON
@@ -426,7 +426,7 @@ fig_dept.update_layout(
     hovermode="x unified"
 )
 
-st.plotly_chart(fig_dept, width="stretch")
+st.plotly_chart(fig_dept, use_container_width=True)
 
 # =========================
 # STORE PERFORMANCE TABLE
@@ -447,7 +447,7 @@ performance = (
 )
 
 with st.expander("View Detailed Data"):
-    st.dataframe(performance, width="stretch", height=450)
+    st.dataframe(performance, use_container_width=True, height=450)
 
 # =========================
 # AI RECOMMENDATION

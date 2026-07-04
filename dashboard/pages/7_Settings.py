@@ -3,7 +3,7 @@ from pathlib import Path
 from auth import *
 
 if not st.session_state.get("logged_in", False):
-    st.switch_page("login.py")
+    st.switch_page("dashboard/login.py")
 
 css_file = Path(__file__).resolve().parents[1] / "assets" / "style.css"
 
@@ -82,10 +82,10 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-    if st.button("🚪 Logout", width="stretch"):
+    if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("login.py")
+        st.switch_page("dashboard/login.py")
 
 #navbar
 nav1, nav2, nav3 = st.columns([5, 5, 2])
@@ -297,7 +297,7 @@ save_col, reset_col = st.columns(2)
 with save_col:
     if st.button(
         "💾 Save Settings",
-        width="stretch"
+        use_container_width=True
     ):
         st.toast("Settings Saved Successfully ✅")
         st.success(
@@ -307,7 +307,7 @@ with save_col:
 with reset_col:
     if st.button(
         "🔄 Reset Settings",
-        width="stretch"
+        use_container_width=True
     ):
         st.toast("Settings Reset ✅")
         st.info(
