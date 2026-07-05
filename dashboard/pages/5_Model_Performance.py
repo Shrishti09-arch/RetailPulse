@@ -6,6 +6,13 @@ from pathlib import Path
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from auth import *
 
+st.set_page_config(
+    page_title="RetailPulse - Model Performance",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # =========================
 # INITIALIZATION
 # =========================
@@ -17,13 +24,6 @@ with open(css_file) as f:
 if not st.session_state.get("logged_in", False):
     st.error("Please login first.")
     st.stop()
-
-st.set_page_config(
-    page_title="RetailPulse - Model Performance",
-    page_icon="📈",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
 
 # =========================
 # SIDEBAR
@@ -58,7 +58,7 @@ with st.sidebar:
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("dashboard/login.py")
+        st.switch_page("login.py")
 
 # =========================
 # NAVBAR

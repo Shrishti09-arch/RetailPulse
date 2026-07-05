@@ -2,8 +2,14 @@ import streamlit as st
 from pathlib import Path
 from auth import *
 
+st.set_page_config(
+    page_title="RetailPulse Settings",
+    page_icon="⚙",
+    layout="wide"
+)
+
 if not st.session_state.get("logged_in", False):
-    st.switch_page("dashboard/login.py")
+    st.switch_page("login.py")
 
 css_file = Path(__file__).resolve().parents[1] / "assets" / "style.css"
 
@@ -12,12 +18,6 @@ with open(css_file) as f:
         f"<style>{f.read()}</style>",
         unsafe_allow_html=True
     )
-
-st.set_page_config(
-    page_title="RetailPulse Settings",
-    page_icon="⚙",
-    layout="wide"
-)
 
 #sidebar
 with st.sidebar:
@@ -85,7 +85,7 @@ with st.sidebar:
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("dashboard/login.py")
+        st.switch_page("login.py")
 
 #navbar
 nav1, nav2, nav3 = st.columns([5, 5, 2])
