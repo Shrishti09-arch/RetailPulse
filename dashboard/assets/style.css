@@ -482,3 +482,10 @@ input{
 .settings-card p{
     color:#A9B7D0;
 }
+/* Hide Streamlit's default auto-generated multipage navigation list.
+   This app uses a fully custom sidebar (branding, page links, logout button)
+   built manually in each page's "with st.sidebar:" block, so the built-in
+   nav list is redundant and causes a duplicate-looking sidebar. */
+[data-testid="stSidebarNav"] {
+    display: none;
+}
