@@ -92,7 +92,7 @@ with st.sidebar:
     if st.button("🚪 Logout", use_container_width=True):
         st.session_state.logged_in = False
         st.session_state.username = ""
-        st.switch_page("dashboard/login.py")
+        st.switch_page("login.py")
 
 # =========================
 # TOP NAVBAR (Reusable Component)
@@ -152,9 +152,22 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
+@st.cache_data
+def load_data():
+    data = pd.read_csv(ROOT_DIR / "data" / "processed" / "retailpulse_features.csv")
+
+    # Downcast numeric dtypes to reduce memory footprint
+    float_cols = data.select_dtypes(include="float64").columns
+    data[float_cols] = data[float_cols].astype("float32")
+
+    int_cols = data.select_dtypes(include="int64").columns
+    data[int_cols] = data[int_cols].astype("int32")
+
+    return data
+
 with st.spinner("Loading Retail Analytics..."):
     try:
-        df = pd.read_csv(ROOT_DIR / "data" / "processed" / "retailpulse_features.csv")
+        df = load_data()
     except FileNotFoundError:
         st.error("Dataset not found.")
         st.stop()
@@ -185,7 +198,7 @@ with filter3:
         ["All", "Holiday", "Non-Holiday"]
     )
 
-filtered_df = df.copy()
+filtered_df = df
 
 if store_filter != "All":
     filtered_df = filtered_df[filtered_df["Store"] == store_filter]
