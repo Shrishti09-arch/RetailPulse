@@ -90,3 +90,16 @@ joblib.dump(model, model_path)
 
 print("\nModel Saved:")
 print(model_path)
+
+# Save Actual vs Predicted values for the Model Performance dashboard page
+predictions_df = pd.DataFrame({
+    "Actual": y_test.values,
+    "Predicted": preds
+})
+
+predictions_path = BASE_DIR / "data/processed/predictions.csv"
+
+predictions_df.to_csv(predictions_path, index=False)
+
+print("\nPredictions Saved:")
+print(predictions_path)
