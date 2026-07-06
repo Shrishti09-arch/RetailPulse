@@ -91,14 +91,18 @@ st.markdown(
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
+@st.cache_data
+def load_forecast():
+    data = pd.read_csv(ROOT_DIR / "data" / "processed" / "prophet_forecast.csv")
+    data["ds"] = pd.to_datetime(data["ds"])
+    return data
+
 with st.spinner("Loading Forecast Data..."):
     try:
-        forecast = pd.read_csv(ROOT_DIR / "data" / "processed" / "prophet_forecast.csv")
+        forecast = load_forecast()
     except FileNotFoundError:
         st.error("Dataset not found.")
         st.stop()
-
-forecast["ds"] = pd.to_datetime(forecast["ds"])
 
 # =========================
 # FILTERS
@@ -265,13 +269,16 @@ st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("## 📋 Forecast Summary")
 
-growth = (
-    (
-        forecast_display.iloc[-1]["yhat"]
-        - forecast_display.iloc[0]["yhat"]
-    )
-    / forecast_display.iloc[0]["yhat"]
-) * 100
+if forecast_display.iloc[0]["yhat"] != 0:
+    growth = (
+        (
+            forecast_display.iloc[-1]["yhat"]
+            - forecast_display.iloc[0]["yhat"]
+        )
+        / forecast_display.iloc[0]["yhat"]
+    ) * 100
+else:
+    growth = 0
 
 st.markdown(
     f"""
