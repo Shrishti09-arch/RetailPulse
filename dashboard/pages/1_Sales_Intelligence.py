@@ -3,6 +3,7 @@ import pandas as pd
 import plotly.express as px
 from pathlib import Path
 from auth import *
+from utils import load_features_data
 
 st.set_page_config(
     page_title="RetailPulse - Sales Intelligence",
@@ -94,7 +95,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 
 with st.spinner("Loading Retail Analytics..."):
     try:
-        df = pd.read_csv(ROOT_DIR / "data" / "processed" / "retailpulse_features.csv")
+        df = load_features_data()
     except FileNotFoundError:
         st.error("Dataset not found.")
         st.stop()

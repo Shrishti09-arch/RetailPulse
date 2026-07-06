@@ -8,6 +8,7 @@ from openpyxl import Workbook
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 from auth import *
+from utils import load_features_data
 
 # =========================
 # INITIALIZATION
@@ -152,22 +153,9 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 ROOT_DIR = Path(__file__).resolve().parents[2]
 
-@st.cache_data
-def load_data():
-    data = pd.read_csv(ROOT_DIR / "data" / "processed" / "retailpulse_features.csv")
-
-    # Downcast numeric dtypes to reduce memory footprint
-    float_cols = data.select_dtypes(include="float64").columns
-    data[float_cols] = data[float_cols].astype("float32")
-
-    int_cols = data.select_dtypes(include="int64").columns
-    data[int_cols] = data[int_cols].astype("int32")
-
-    return data
-
 with st.spinner("Loading Retail Analytics..."):
     try:
-        df = load_data()
+        df = load_features_data()
     except FileNotFoundError:
         st.error("Dataset not found.")
         st.stop()
